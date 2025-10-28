@@ -37,8 +37,27 @@ Accurate monitoring of marine biomass is a cornerstone of sustainable ocean mana
 ### The Role of Machine learning
 (Introduce ML as a solution to handle the high volume, velocity, and variety (e.g., sensor fusion) of modern oceanographic data. Highlight automation, pattern recognition, and predictive capabilities, as reviewed in [malde2022] for deep learning in marine ecology.)
 
+### Related Work and Contribution
+(Discuss previous reviews, such as Malde et al. [malde2022] on general marine ecology and Ditria et al. [ditria2025] on remote sensing. Clearly state this paper's unique contribution: e.g., "This survey is the first to synthesize literature across acoustic, optical, *and* chemical/spectral data sources," or "We provide the most up-to-date (2020-2025) review that also includes a quantitative analysis of methodological trends...")
+
 ### Scope and Objectives of this Survey
 (Define the boundaries: focus on papers from 2020-2025 that explicitly apply ML/DL techniques to a marine biomass analysis task. State the aim: to synthesize recent trends, key methodologies, and major application areas. This overall workflow is illustrated conceptually in Fig. 1.)
+
+---
+
+## Survey Methodology
+(This new section establishes the academic rigor of your survey.)
+
+### Search Strategy and Selection Criteria
+(Explain *how* you found the papers. E.g., "This survey was conducted by querying the IEEE Xplore, Scopus, and Web of Science databases for articles published between January 2020 and October 2025. Search strings included combinations of {'machine learning', 'deep learning'} AND {'marine biomass', 'fisheries', 'plankton', 'acoustics', 'aquaculture'}. We included only peer-reviewed journal and conference papers that presented a novel ML application or analysis...")
+
+### Literature Analysis and Trends
+(Present your quantitative analysis. E.g., "Our search yielded 150 potential papers, which were screened for relevance, resulting in 32 papers for final analysis." This is where you would include new figures showing:
+
+*   A bar chart of included papers per year (2020-2025).
+*   A pie chart showing the distribution of ML methods (e.g., CNNs, YOLO, RF).
+*   A chart showing the application focus (e.g., Fisheries vs. Plankton vs. Remote Sensing).
+)
 
 ---
 
@@ -69,7 +88,7 @@ To apply the machine learning solutions proposed in the introduction, a diverse 
 
 ## Machine Learning Methodologies
 
-![A taxonomy of the machine learning methodologies discussed in Section III. The field is broadly categorized into four paradigms, each with specific methods (e.g., CNNs, Genetic Programming) that are suited to different data types and problems.](figures/methodology_taxonomy_figure.png)
+![A taxonomy of the machine learning methodologies discussed in Section IV. The field is broadly categorized into four paradigms, each with specific methods (e.g., CNNs, Genetic Programming) that are suited to different data types and problems.](figures/methodology_taxonomy_figure.png)
 
 Once the varied data from these sources is collected, appropriate machine learning models must be selected to process it and extract meaningful patterns. This section provides a taxonomy of the key ML methodologies deployed in the recent literature. A hierarchical breakdown of this taxonomy is presented in Fig. 3. These include traditional supervised learning, deep learning architectures, unsupervised clustering, and interpretable methods like symbolic regression.
 
@@ -87,7 +106,7 @@ Once the varied data from these sources is collected, appropriate machine learni
 (The dominant model for image-based tasks. Used for: species identification from images [wisnu2024], semantic segmentation of echograms [brautaset2025], and object detection for aquaculture automation [mcmillan2023improving, zhao2023buoy].)
 
 #### Advanced Architectures (e.g., YOLO, Transformers)
-(E.g., YOLO (You Only Look Once) is heavily used for real-time object detection, such as for fish counting on vessels [park2024], phytoplankton identification [wisnu2024], and muscle float byouancy detection [zhao2023buoy,mcmillan2023improving,mcmillan2024deep]. Transformers, adapted from language processing, are now being used to classify complex, high-dimensional spectral data from mass spectrometry [wood2025hook].)
+(E.g., YOLO (You Only Look Once) is heavily used for real-time object detection, such as for fish counting on vessels [park2024] and phytoplankton identification [wisnu2024]. Transformers, adapted from language processing, are now being used to classify complex, high-dimensional spectral data from mass spectrometry [wood2025hook].)
 
 ### Unsupervised Learning
 (E.g., K-Means, DBSCAN. Used for clustering acoustic data into distinct signal types (e.g., "fish school," "seabed," "plankton layer") without pre-existing labels.)
@@ -95,11 +114,16 @@ Once the varied data from these sources is collected, appropriate machine learni
 ### Evolutionary Computation and Symbolic Regression
 (Discuss methods like Genetic Programming (GP) that evolve interpretable mathematical equations. This approach, part of the 'Evolutionary Computation' branch in Fig. 3, can discover novel relationships, such as finding formulas to predict fish biomass directly from spectral data, which contrasts with "black box" neural networks [huang2025symbolically].)
 
+### Common Datasets and Benchmarks
+(Discuss the data availability. E.g., "A significant challenge in this field is the lack of large, public, annotated benchmark datasets, as noted in [malde2022]. Many studies rely on smaller, private datasets collected by their own institutes... However, some public datasets are emerging, such as... [cite relevant dataset papers, if any, e.g., NOAAs acoustic datasets or Kaggle plankton competitions].")
+
+### Evaluation Metrics
+(Discuss how models are judged. E.g., "The choice of metric is task-dependent. For classification (e.g., species identification [wisnu2024, wood2025hook]), F1-score and accuracy are common. For object detection (e.g., fish counting [park2024]), Mean Average Precision (mAP) is the standard. For regression (e.g., biomass estimation [zhang2024]), $R^2$ and Root Mean Squared Error (RMSE) are widely used...")
+
 ---
 
 ## Key Application Areas and Recent Literature
-
-With an understanding of the available data (Section II) and the ML methodologies (Section III), we can now explore how researchers are combining them to solve real-world problems. This section surveys the key application areas where these techniques are having the most impact, summarized in Table 1. We will review recent literature in fisheries and aquaculture assessment, plankton analysis, large-scale phytoplankton monitoring, and molecular-level analysis for food authenticity.
+With an understanding of the available data (Section III) and the ML methodologies (Section IV), we can now explore how researchers are combining them to solve real-world problems. This section surveys the key application areas where these techniques are having the most impact, summarized in Table 1. We will review recent literature in fisheries and aquaculture assessment, plankton analysis, large-scale phytoplankton monitoring, and molecular-level analysis for food authenticity.
 
 | **Reference** | **Application Area** | **Data Source** | **ML Method(s)** | **Key Contribution** |
 | --- | --- | --- | --- | --- |
@@ -138,6 +162,12 @@ While the applications reviewed in the previous section demonstrate significant 
 
 ### Current Challenges and Limitations
 (E.g., The "labeled data bottleneck" for training deep learning models [malde2022]. Model interpretability (explainable AI); many DL models are "black boxes," which is a barrier to adoption. Methods that produce interpretable models, like symbolic regression, are one way to address this [huang2025symbolically]. Physical challenges like feature occlusion in underwater video [zhang2024] and the difficulty of ground-truthing remote sensing data [ditria2025] also remain.)
+
+### Comparative Analysis of Methodologies
+(This is the "why" section. Discuss trade-offs. E.g., "For spectral data, Transformers [wood2025hook] may achieve high accuracy but are complex, whereas Symbolic Regression [huang2025symbolically] produces interpretable formulas at a potential cost to performance. For fisheries assessment, acoustic methods [brautaset2025] offer wide-area coverage, while camera-based systems [park2024, zhang2024] provide higher-resolution data (e.g., species identification) but at a shorter range...")
+
+### Ethical Considerations and Societal Impact
+(Discuss the broader implications. E.g., "The adoption of real-time monitoring systems [park2024] raises questions of data ownership and surveillance in commercial fishing. Furthermore, while AI can optimize aquaculture [aftab2024], it may also have socio-economic impacts on manual labor. The 'black box' nature of some models [wood2025hook] could be a barrier to legal or regulatory acceptance...")
 
 ### Future Trends
 (E.g., Sensor fusion (combining acoustic, optical, and chemical data [wood2025hook]) and real-time, on-board processing (edge computing) on AUVs/USVs [park2024], both of which are illustrated conceptually in Fig. 4. Physics-informed neural networks (PINNs) that incorporate oceanographic models also represent a key future direction.)

@@ -5,89 +5,16 @@ import pandas as pd # Import pandas for crosstab
 import seaborn as sns # Import seaborn for heatmap
 import os
 
-# --- Data based on the 37 papers (including Park et al. placeholder) ---
-# --- ENSURING BOTH LISTS HAVE EXACTLY 37 ITEMS, ALIGNED ---
+# --- Data based on the 44 papers provided in the bib file ---
 
-# ML Methods (Simplified Categories) - Should have 37 entries
+# ML Methods (Simplified Categories) - Should have 44 entries
 methods_data = [
-    'CNN/U-Net',        # Aftab
-    'Unsupervised',     # Alfano
-    'Review/Meta',      # Ardhi
-    'CNN/U-Net',        # Brautaset
-    'Self-Supervised',  # Ciranni
-    'Review/Meta',      # Ditria
-    'Other/General ML', # Dubus
-    'Unsupervised',     # Goulart
-    'Other/General ML', # HuangML  <-- Corrected entry added in correct position
-    'Symbolic Regression',# HuangSymbolic
-    'CNN/U-Net',        # Jayanthi
-    'CNN/U-Net',        # Kerr
-    'CNN/U-Net',        # KumarFrameworks
-    'CNN/U-Net',        # KumarTransform
-    'Trad. Supervised', # Kwon
-    'Trad. Supervised', # LiuShape
-    'Trad. Supervised', # LiuPlankton
-    'CNN/U-Net',        # Ma
-    'Self-Supervised',  # Masoudi
-    'Trad. Supervised', # McCarthy
-    'YOLO',             # McMillanImproving
-    'Transformer',      # McMillanDeep
-    'YOLO',             # Park
-    'Other/General ML', # Priya
-    'CNN/U-Net',        # Pu
-    'Trad. Supervised', # Seto
-    'CNN/U-Net',        # Somek
-    'CNN/U-Net',        # Testolin
-    'Other/General ML', # Vargas
-    'CNN/U-Net',        # Varma
-    'Other/General ML', # Walker
-    'CNN/U-Net',        # Weiss
-    'Trad. Supervised', # WoodAuto
-    'Transformer',      # WoodHook
-    'Other/General ML', # Yang
-    'Transformer',      # Yuan
-    'CNN/U-Net'         # Zhang (Re-categorized Autoencoder as NN type)
+    'CNN/U-Net', 'Unsupervised', 'Review/Meta', 'CNN/U-Net', 'Self-Supervised', 'Review/Meta', 'Other/General ML', 'Unsupervised', 'Other/General ML', 'Symbolic Regression', 'CNN/U-Net', 'CNN/U-Net', 'CNN/U-Net', 'CNN/U-Net', 'Trad. Supervised', 'Trad. Supervised', 'Trad. Supervised', 'Trad. Supervised', 'CNN/U-Net', 'Self-Supervised', 'Trad. Supervised', 'YOLO', 'Transformer', 'YOLO', 'Other/General ML', 'CNN/U-Net', 'Trad. Supervised', 'CNN/U-Net', 'CNN/U-Net', 'Other/General ML', 'CNN/U-Net', 'Other/General ML', 'CNN/U-Net', 'Trad. Supervised', 'Transformer', 'Other/General ML', 'Other/General ML', 'Transformer', 'CNN/U-Net', 'Trad. Supervised', 'Trad. Supervised', 'Review/Meta', 'Trad. Supervised', 'Trad. Supervised'
 ]
 
-# Application Focus (Should have 37 entries)
+# Application Focus (Should have 44 entries)
 applications_data = [
-    'Aquaculture', # Aftab
-    'Plankton Analysis', # Alfano
-    'Plankton Analysis', # Ardhi
-    'Fisheries Assessment', # Brautaset
-    'Plankton Analysis', # Ciranni
-    'Remote Sensing', # Ditria
-    'Underwater Acoustics', # Dubus
-    'Plankton Analysis', # Goulart
-    'Fisheries Management', # HuangML
-    'Food Authenticity', # HuangSymbolic
-    'Aquaculture', # Jayanthi (Security)
-    'Plankton Analysis', # Kerr
-    'Underwater Acoustics', # KumarFrameworks
-    'Underwater Acoustics', # KumarTransform
-    'Plankton Analysis', # Kwon (Phyto focus)
-    'Plankton Analysis', # LiuShape
-    'Plankton Analysis', # LiuPlankton
-    'Plankton Analysis', # Ma
-    'Plankton Analysis', # Masoudi
-    'Underwater Acoustics', # McCarthy
-    'Aquaculture', # McMillanImproving
-    'Aquaculture', # McMillanDeep
-    'Fisheries Management', # Park
-    'Plankton Analysis', # Priya
-    'Plankton Analysis', # Pu
-    'Algal Biomass', # Seto
-    'Plankton Analysis', # Somek
-    'Fisheries Assessment', # Testolin
-    'Fisheries Management', # Vargas
-    'Plankton Analysis', # Varma
-    'Plankton Analysis', # Walker
-    'Underwater Acoustics', # Weiss
-    'Food Authenticity', # WoodAuto
-    'Food Authenticity', # WoodHook
-    'Plankton Analysis', # Yang
-    'Plankton Analysis', # Yuan
-    'Aquaculture', # Zhang
+    'Aquaculture', 'Plankton Analysis', 'Plankton Analysis', 'Fisheries Assessment', 'Plankton Analysis', 'Remote Sensing', 'Underwater Acoustics', 'Plankton Analysis', 'Fisheries Management', 'Food Authenticity', 'Aquaculture', 'Plankton Analysis', 'Underwater Acoustics', 'Underwater Acoustics', 'Plankton Analysis', 'Plankton Analysis', 'Plankton Analysis', 'Food Authenticity', 'Plankton Analysis', 'Plankton Analysis', 'Underwater Acoustics', 'Aquaculture', 'Aquaculture', 'Fisheries Management', 'Plankton Analysis', 'Plankton Analysis', 'Algal Biomass', 'Plankton Analysis', 'Fisheries Assessment', 'Fisheries Management', 'Plankton Analysis', 'Plankton Analysis', 'Underwater Acoustics', 'Food Authenticity', 'Food Authenticity', 'Plankton Analysis', 'Food Authenticity', 'Plankton Analysis', 'Aquaculture', 'Food Authenticity', 'Food Authenticity', 'Food Authenticity', 'Food Authenticity', 'Food Authenticity'
 ]
 
 # --- Verify data alignment ---

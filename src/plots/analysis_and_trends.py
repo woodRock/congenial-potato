@@ -3,17 +3,11 @@ import collections
 import numpy as np
 import os # Import os to check/create directory
 
-# --- Data based on the 36 papers provided in the bib file ---
+# --- Data based on the 44 papers provided in the bib file ---
 
 # 1. Publication Years
 years_data = [
-    2020, 2020, 2020, # Kerr, LiuShape, Varma
-    2021, 2021, 2021, 2021, 2021, # LiuPlankton, Goulart, Pu, Ma, Walker
-    2022, 2022, 2022, 2022, 2022, 2022, # Alfano, Ardhi, Testolin, woodAuto, Weiss, aftab (originally 2024, but bib shows 2022) - Rechecking aftab2024 entry. It says 2024. OK. Let's assume bib is correct for others for now.
-                                 # Recheck years from bib: Alfano(22), Ardhi(22), Brautaset(25), Ciranni(25), Ditria(25), Dubus(23), Goulart(21), HuangML(23), HuangSym(25), Jayanthi(25), Kerr(20), KumarF(23), KumarT(23), Kwon(25), LiuShape(20), LiuPlankton(21), Ma(21), Masoudi(24), McCarthy(23), McMillanI(23), McMillanD(24), Park(*missing*), Priya(23), Pu(21), Seto(25), Somek(23), Testolin(22), Vargas(24), Varma(20), Walker(21), Weiss(22), WoodAuto(22), WoodHook(25), Yang(24), Yuan(25), Zhang(24).
-    2023, 2023, 2023, 2023, 2023, 2023, # Dubus, HuangML, KumarF, KumarT, McCarthy, Priya, Somek
-    2024, 2024, 2024, 2024, 2024, 2024, # aftab, Masoudi, McMillanD, Vargas, Yang, Zhang
-    2025, 2025, 2025, 2025, 2025, 2025, 2025, 2025, 2025 # Brautaset, Ciranni, Ditria, HuangSym, Jayanthi, Kwon, Seto, WoodHook, Yuan
+    2024, 2022, 2022, 2025, 2025, 2025, 2023, 2021, 2023, 2025, 2025, 2020, 2023, 2023, 2025, 2020, 2021, 2024, 2021, 2024, 2023, 2023, 2024, 2024, 2023, 2021, 2025, 2023, 2022, 2024, 2020, 2021, 2022, 2022, 2025, 2024, 2024, 2025, 2024, 2022, 2023, 2025, 2024, 2020
 ]
 year_counts = collections.Counter(years_data)
 years = sorted(year_counts.keys())
@@ -22,43 +16,7 @@ counts_years = [year_counts[year] for year in years]
 # 2. ML Methods (Simplified Categories based on primary focus/mention)
 # Categories: CNN/U-Net, Transformer, YOLO, Trad. Supervised (SVM/RF/Boost/Prob), Unsupervised, Self-Supervised, Symbolic Regression, Review/Meta, Other/General ML
 methods_data = [
-    'Unsupervised', # Alfano
-    'Review/Meta', # Ardhi
-    'CNN/U-Net', # Brautaset
-    'Self-Supervised', # Ciranni
-    'Review/Meta', # Ditria
-    'Other/General ML', # Dubus (Kappa metrics, not ML model focus)
-    'Unsupervised', # Goulart
-    'Other/General ML', # HuangML
-    'Symbolic Regression', # HuangSymbolic
-    'CNN/U-Net', # Jayanthi (also SVM/RF)
-    'CNN/U-Net', # Kerr (Collaborative DL -> CNN focus)
-    'CNN/U-Net', # KumarFrameworks (Autoencoder/VGG)
-    'CNN/U-Net', # KumarTransform (DNN/Autoencoder)
-    'Trad. Supervised', # Kwon (Probabilistic ML)
-    'Trad. Supervised', # LiuShape (Shape Analysis / ML)
-    'Trad. Supervised', # LiuPlankton (LightBGM)
-    'CNN/U-Net', # Ma (ResNet)
-    'Self-Supervised', # Masoudi
-    'Trad. Supervised', # McCarthy (RF/Tree)
-    'YOLO', # McMillanImproving (Transfer Learning YOLO)
-    'Transformer', # McMillanDeep (Vision Transformer)
-    # Park missing - Assuming Park et al. 2024 uses YOLO based on context
-    'YOLO', # Park (AI / YOLO / ByteTrack)
-    'Other/General ML', # Priya (General ML)
-    'CNN/U-Net', # Pu (DL)
-    'Trad. Supervised', # Seto (RF)
-    'CNN/U-Net', # Somek (CNNs)
-    'CNN/U-Net', # Testolin (CNN/RNN)
-    'Other/General ML', # Vargas (ML Algorithm)
-    'CNN/U-Net', # Varma (CNN)
-    'Other/General ML', # Walker (Hard Negative Mining / ML)
-    'CNN/U-Net', # Weiss (CNN)
-    'Trad. Supervised', # WoodAuto (SVM)
-    'Transformer', # WoodHook (Transformer)
-    'Other/General ML', # Yang (DL-based enhancement mentioned comparison)
-    'Transformer', # Yuan (Swin Transformer)
-    'CNN/U-Net', # Zhang (Autoencoder for imputation) + Trad. Supervised # Re-categorized
+    'CNN/U-Net', 'Unsupervised', 'Review/Meta', 'CNN/U-Net', 'Self-Supervised', 'Review/Meta', 'Other/General ML', 'Unsupervised', 'Other/General ML', 'Symbolic Regression', 'CNN/U-Net', 'CNN/U-Net', 'CNN/U-Net', 'CNN/U-Net', 'Trad. Supervised', 'Trad. Supervised', 'Trad. Supervised', 'Trad. Supervised', 'CNN/U-Net', 'Self-Supervised', 'Trad. Supervised', 'YOLO', 'Transformer', 'YOLO', 'Other/General ML', 'CNN/U-Net', 'Trad. Supervised', 'CNN/U-Net', 'CNN/U-Net', 'Other/General ML', 'CNN/U-Net', 'Other/General ML', 'CNN/U-Net', 'Trad. Supervised', 'Transformer', 'Other/General ML', 'Other/General ML', 'Transformer', 'CNN/U-Net', 'Trad. Supervised', 'Trad. Supervised', 'Review/Meta', 'Trad. Supervised', 'Trad. Supervised'
 ]
 
 method_counts = collections.Counter(methods_data)
@@ -69,43 +27,7 @@ labels_methods = sorted_methods
 
 # 3. Application Focus
 applications_data = [
-    'Aquaculture', # Aftab
-    'Plankton Analysis', # Alfano
-    'Plankton Analysis', # Ardhi
-    'Fisheries Assessment', # Brautaset
-    'Plankton Analysis', # Ciranni
-    'Remote Sensing', # Ditria
-    'Underwater Acoustics', # Dubus
-    'Plankton Analysis', # Goulart
-    'Fisheries Management', # HuangML
-    'Food Authenticity', # HuangSymbolic
-    'Aquaculture', # Jayanthi (Security)
-    'Plankton Analysis', # Kerr
-    'Underwater Acoustics', # KumarFrameworks
-    'Underwater Acoustics', # KumarTransform
-    'Plankton Analysis', # Kwon (Phyto focus)
-    'Plankton Analysis', # LiuShape
-    'Plankton Analysis', # LiuPlankton
-    'Plankton Analysis', # Ma
-    'Plankton Analysis', # Masoudi
-    'Underwater Acoustics', # McCarthy
-    'Aquaculture', # McMillanImproving
-    'Aquaculture', # McMillanDeep
-    'Fisheries Management', # Park
-    'Plankton Analysis', # Priya
-    'Plankton Analysis', # Pu
-    'Algal Biomass', # Seto
-    'Plankton Analysis', # Somek
-    'Fisheries Assessment', # Testolin
-    'Fisheries Management', # Vargas
-    'Plankton Analysis', # Varma
-    'Plankton Analysis', # Walker
-    'Underwater Acoustics', # Weiss
-    'Food Authenticity', # WoodAuto
-    'Food Authenticity', # WoodHook
-    'Plankton Analysis', # Yang
-    'Plankton Analysis', # Yuan
-    'Aquaculture', # Zhang
+    'Aquaculture', 'Plankton Analysis', 'Plankton Analysis', 'Fisheries Assessment', 'Plankton Analysis', 'Remote Sensing', 'Underwater Acoustics', 'Plankton Analysis', 'Fisheries Management', 'Food Authenticity', 'Aquaculture', 'Plankton Analysis', 'Underwater Acoustics', 'Underwater Acoustics', 'Plankton Analysis', 'Plankton Analysis', 'Plankton Analysis', 'Food Authenticity', 'Plankton Analysis', 'Plankton Analysis', 'Underwater Acoustics', 'Aquaculture', 'Aquaculture', 'Fisheries Management', 'Plankton Analysis', 'Plankton Analysis', 'Algal Biomass', 'Plankton Analysis', 'Fisheries Assessment', 'Fisheries Management', 'Plankton Analysis', 'Plankton Analysis', 'Underwater Acoustics', 'Food Authenticity', 'Food Authenticity', 'Plankton Analysis', 'Food Authenticity', 'Plankton Analysis', 'Aquaculture', 'Food Authenticity', 'Food Authenticity', 'Food Authenticity', 'Food Authenticity', 'Food Authenticity'
 ]
 app_counts = collections.Counter(applications_data)
 # Sort applications by count descending for the bar chart

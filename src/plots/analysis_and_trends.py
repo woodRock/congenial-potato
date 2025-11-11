@@ -1,23 +1,37 @@
 import matplotlib.pyplot as plt
 import collections
 import numpy as np
-import os # Import os to check/create directory
+import os
+import re
+import json
 
-# --- Data based on the 44 papers provided in the bib file ---
+import json
 
-# 1. Publication Years
-years_data = [
-    2024, 2022, 2022, 2025, 2025, 2025, 2023, 2021, 2023, 2025, 2025, 2020, 2023, 2023, 2025, 2020, 2021, 2024, 2021, 2024, 2023, 2023, 2024, 2024, 2023, 2021, 2025, 2023, 2022, 2024, 2020, 2021, 2022, 2022, 2025, 2024, 2024, 2025, 2024, 2022, 2023, 2025, 2024, 2020
-]
+# --- Read the categorized papers ---
+with open('/Users/woodj/Desktop/congenial-potato/src/categorized_papers.json', 'r') as f:
+    categorized_papers = json.load(f)
+
+methods_data = [paper['methodology_category'] for paper in categorized_papers]
+applications_data = [paper['application_category'] for paper in categorized_papers]
+
+# --- Read and parse the bib file for years ---
+with open('/Users/woodj/Desktop/congenial-potato/refs.bib', 'r') as f:
+    content = f.read()
+
+entries = content.split('\n@')
+years_data = []
+for entry in entries:
+    if not entry.strip():
+        continue
+    year_match = re.search(r'year\s*=\s*{(\d{4})}', entry, re.IGNORECASE)
+    if year_match:
+        years_data.append(int(year_match.group(1)))
+
+
+# --- The rest of the plotting code remains the same ---
 year_counts = collections.Counter(years_data)
 years = sorted(year_counts.keys())
 counts_years = [year_counts[year] for year in years]
-
-# 2. ML Methods (Simplified Categories based on primary focus/mention)
-# Categories: CNN/U-Net, Transformer, YOLO, Trad. Supervised (SVM/RF/Boost/Prob), Unsupervised, Self-Supervised, Symbolic Regression, Review/Meta, Other/General ML
-methods_data = [
-    'CNN/U-Net', 'Unsupervised', 'Review/Meta', 'CNN/U-Net', 'Self-Supervised', 'Review/Meta', 'Other/General ML', 'Unsupervised', 'Other/General ML', 'Symbolic Regression', 'CNN/U-Net', 'CNN/U-Net', 'CNN/U-Net', 'CNN/U-Net', 'Trad. Supervised', 'Trad. Supervised', 'Trad. Supervised', 'Trad. Supervised', 'CNN/U-Net', 'Self-Supervised', 'Trad. Supervised', 'YOLO', 'Transformer', 'YOLO', 'Other/General ML', 'CNN/U-Net', 'Trad. Supervised', 'CNN/U-Net', 'CNN/U-Net', 'Other/General ML', 'CNN/U-Net', 'Other/General ML', 'CNN/U-Net', 'Trad. Supervised', 'Transformer', 'Other/General ML', 'Other/General ML', 'Transformer', 'CNN/U-Net', 'Trad. Supervised', 'Trad. Supervised', 'Review/Meta', 'Trad. Supervised', 'Trad. Supervised'
-]
 
 method_counts = collections.Counter(methods_data)
 # Sort methods for consistent pie chart ordering
@@ -25,11 +39,8 @@ sorted_methods = sorted(method_counts.keys())
 counts_methods = [method_counts[key] for key in sorted_methods]
 labels_methods = sorted_methods
 
-# 3. Application Focus
-applications_data = [
-    'Aquaculture', 'Plankton Analysis', 'Plankton Analysis', 'Fisheries Assessment', 'Plankton Analysis', 'Remote Sensing', 'Underwater Acoustics', 'Plankton Analysis', 'Fisheries Management', 'Food Authenticity', 'Aquaculture', 'Plankton Analysis', 'Underwater Acoustics', 'Underwater Acoustics', 'Plankton Analysis', 'Plankton Analysis', 'Plankton Analysis', 'Food Authenticity', 'Plankton Analysis', 'Plankton Analysis', 'Underwater Acoustics', 'Aquaculture', 'Aquaculture', 'Fisheries Management', 'Plankton Analysis', 'Plankton Analysis', 'Algal Biomass', 'Plankton Analysis', 'Fisheries Assessment', 'Fisheries Management', 'Plankton Analysis', 'Plankton Analysis', 'Underwater Acoustics', 'Food Authenticity', 'Food Authenticity', 'Plankton Analysis', 'Food Authenticity', 'Plankton Analysis', 'Aquaculture', 'Food Authenticity', 'Food Authenticity', 'Food Authenticity', 'Food Authenticity', 'Food Authenticity'
-]
 app_counts = collections.Counter(applications_data)
+print(app_counts)
 # Sort applications by count descending for the bar chart
 sorted_apps = sorted(app_counts.items(), key=lambda item: item[1], reverse=True)
 labels_apps = [item[0] for item in sorted_apps]
@@ -50,7 +61,7 @@ fig1, ax1 = plt.subplots(figsize=(10, 6))
 ax1.bar(years, counts_years, color='skyblue')
 ax1.set_xlabel('Publication Year')
 ax1.set_ylabel('Number of Papers')
-ax1.set_title('Distribution of Included Papers by Year (2020-2025)')
+ax1.set_title('Distribution of Included Papers by Year')
 ax1.set_xticks(years) # Ensure all years are labeled
 ax1.spines['top'].set_visible(False)
 ax1.spines['right'].set_visible(False)

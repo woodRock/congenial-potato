@@ -7,9 +7,10 @@ def create_future_trends_figure():
     (a) Sensor Fusion and (b) Real-time Edge Computing.
     """
     plt.rcParams['font.family'] = 'serif'
+    plt.rcParams['font.size'] = 10
     fig, axes = plt.subplots(1, 2, figsize=(14, 7))
     fig.suptitle('Fig. 4. Conceptual diagrams of future trends in ML for marine analysis.', 
-                 fontsize=16, y=0.98, fontweight='bold')
+                 y=0.98, fontweight='bold', fontsize=12)
 
     # Professional colors
     color_input = '#4C72B0' # Blue
@@ -19,7 +20,7 @@ def create_future_trends_figure():
 
     # --- (a) Sensor Fusion ---
     ax = axes[0]
-    ax.set_title("(a) Sensor Fusion", fontsize=14, fontweight='bold', pad=15)
+    ax.set_title("(a) Sensor Fusion", fontweight='bold', pad=15)
     ax.set_xlim(0, 1)
     ax.set_ylim(0, 1)
     ax.axis('off')
@@ -50,14 +51,14 @@ def create_future_trends_figure():
 
     # --- (b) Real-time Edge Computing ---
     ax = axes[1]
-    ax.set_title("(b) Real-time Edge Computing", fontsize=14, fontweight='bold', pad=15)
+    ax.set_title("(b) Real-time Edge Computing", fontweight='bold', pad=15)
     ax.set_xlim(0, 1)
     ax.set_ylim(0, 1)
     ax.axis('off')
 
     # AUV/Trawler body
     ax.add_patch(patches.Rectangle((0.1, 0.2), 0.8, 0.6, fc='#F0F0F0', ec='#333333', lw=2))
-    ax.text(0.5, 0.85, "AUV / Smart Trawler Platform", ha='center', va='center', fontsize=12, fontweight='bold')
+    ax.text(0.5, 0.85, "AUV / Smart Trawler Platform", ha='center', va='center', fontweight='bold')
     
     # On-board AI
     ax.text(0.5, 0.6, "On-Board AI\n(Edge CPU/GPU)", bbox=model_style, **text_props)

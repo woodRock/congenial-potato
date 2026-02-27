@@ -6,9 +6,10 @@ import matplotlib.patches as patches
 
 def create_taxonomy_figure():
     plt.rcParams['font.family'] = 'serif'
+    plt.rcParams['font.size'] = 10
     fig, ax = plt.subplots(figsize=(14, 8))
     fig.suptitle('Fig. 3. A taxonomy of machine learning methodologies reviewed in this survey.', 
-                 fontsize=16, y=0.98, fontweight='bold')
+                 y=0.98, fontweight='bold', fontsize=12)
 
     node_style = dict(boxstyle='round,pad=0.5', fc='#F9F9F9', ec='#333333', lw=1.5, alpha=0.9)
     line_style = dict(color='#555555', linestyle='-', linewidth=2.0, zorder=0)
@@ -34,7 +35,7 @@ def create_taxonomy_figure():
     all_nodes = {**level0, **level1}
     for key, val in all_nodes.items():
         ax.text(val["pos"][0], val["pos"][1], val["label"], 
-                ha='left', va='center', bbox=node_style, zorder=5, fontsize=11, fontweight='bold')
+                ha='left', va='center', bbox=node_style, zorder=5, fontweight='bold')
 
     def draw_connector(p_pos, c_pos):
         mid_x = (p_pos[0] + c_pos[0]) / 2.0

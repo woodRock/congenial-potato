@@ -7,6 +7,7 @@ import numpy as np
 
 def create_conceptual_overview_figure():
     plt.rcParams['font.family'] = 'serif'
+    plt.rcParams['font.size'] = 10
     fig, ax = plt.subplots(figsize=(14, 10))
 
     # --- 1. Define Nodes and Connections ---
@@ -40,7 +41,7 @@ def create_conceptual_overview_figure():
     box_width = 0.25
     box_height = 0.12
     # Define text properties with white color for boxes
-    text_props_box = dict(ha='center', va='center', fontsize=11, color='white', fontweight='bold')
+    text_props_box = dict(ha='center', va='center', fontsize=10, color='white', fontweight='bold')
 
     # Draw Data Source boxes
     data_source_boxes = {}
@@ -87,7 +88,7 @@ def create_conceptual_overview_figure():
     ax.set_xlim(0, 1)
     ax.set_ylim(-0.1, 1)
     ax.axis('off')
-    ax.set_title("Fig. 1. A conceptual overview of machine learning for marine biomass analysis.", fontsize=16, pad=30, fontweight='bold')
+    ax.set_title("Fig. 1. A conceptual overview of machine learning for marine biomass analysis.", fontsize=12, pad=30, fontweight='bold')
     
     plt.tight_layout()
     plt.savefig("figures/conceptual_overview_figure.pdf", dpi=300, bbox_inches='tight')

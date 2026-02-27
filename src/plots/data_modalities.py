@@ -8,10 +8,17 @@ def create_data_modalities_figure():
     for marine biomass analysis.
     """
     plt.rcParams['font.family'] = 'serif'
+    plt.rcParams['font.size'] = 10
     plt.rcParams['axes.labelweight'] = 'bold'
+    plt.rcParams['axes.titlesize'] = 12
+    plt.rcParams['axes.labelsize'] = 10
+    plt.rcParams['xtick.labelsize'] = 10
+    plt.rcParams['ytick.labelsize'] = 10
+    plt.rcParams['legend.fontsize'] = 10
+
     fig, axes = plt.subplots(2, 2, figsize=(12, 10))
     fig.suptitle('Fig. 2. Examples of data modalities used in ML-based biomass analysis.', 
-                 fontsize=16, y=0.98, fontweight='bold')
+                 y=0.98, fontweight='bold')
 
     # --- (a) Acoustic Echogram ---
     ax = axes[0, 0]
@@ -27,11 +34,11 @@ def create_data_modalities_figure():
     echogram_data += school
     
     im = ax.imshow(echogram_data, aspect='auto', cmap='viridis', vmin=0, vmax=1)
-    ax.set_title('(a) Acoustic Data (Echogram)', fontsize=12, fontweight='bold')
-    ax.set_xlabel('Ping Number (Time)', fontsize=10)
-    ax.set_ylabel('Depth (m)', fontsize=10)
+    ax.set_title('(a) Acoustic Data (Echogram)', fontweight='bold')
+    ax.set_xlabel('Ping Number (Time)')
+    ax.set_ylabel('Depth (m)')
     cbar = fig.colorbar(im, ax=ax, orientation='vertical', fraction=0.046, pad=0.04)
-    cbar.set_label('Signal Strength (dB)', fontsize=10, fontweight='bold')
+    cbar.set_label('Signal Strength (dB)', fontweight='bold')
     ax.set_xticks([])
     ax.set_yticks([])
 
@@ -48,11 +55,11 @@ def create_data_modalities_figure():
     bloom_data[:80, :60] = -0.5  # Land
     
     im = ax.imshow(bloom_data, cmap='GnBu_r', origin='lower')
-    ax.set_title('(b) Remote Sensing Data (Chlorophyll-a)', fontsize=12, fontweight='bold')
-    ax.set_xlabel('Longitude', fontsize=10)
-    ax.set_ylabel('Latitude', fontsize=10)
+    ax.set_title('(b) Remote Sensing Data (Chlorophyll-a)', fontweight='bold')
+    ax.set_xlabel('Longitude')
+    ax.set_ylabel('Latitude')
     cbar = fig.colorbar(im, ax=ax, orientation='vertical', fraction=0.046, pad=0.04)
-    cbar.set_label('Chlorophyll-a (mg/m³)', fontsize=10, fontweight='bold')
+    cbar.set_label('Chlorophyll-a (mg/m³)', fontweight='bold')
     ax.set_xticks([])
     ax.set_yticks([])
 
@@ -74,12 +81,12 @@ def create_data_modalities_figure():
                               edgecolor='#C44E52', facecolor='none', linestyle='-')
     ax.add_patch(bbox1)
     ax.add_patch(bbox2)
-    ax.text(0.15, 0.72, 'fish (98%)', color='#C44E52', fontsize=10, fontweight='bold')
-    ax.text(0.5, 0.45, 'fish (95%)', color='#C44E52', fontsize=10, fontweight='bold')
+    ax.text(0.15, 0.72, 'fish (98%)', color='#C44E52', fontweight='bold')
+    ax.text(0.5, 0.45, 'fish (95%)', color='#C44E52', fontweight='bold')
     
-    ax.set_title('(c) In-situ Optical Data (ML Detection)', fontsize=12, fontweight='bold')
-    ax.set_xlabel('x-pixel', fontsize=10)
-    ax.set_ylabel('y-pixel', fontsize=10)
+    ax.set_title('(c) In-situ Optical Data (ML Detection)', fontweight='bold')
+    ax.set_xlabel('x-pixel')
+    ax.set_ylabel('y-pixel')
     ax.set_xticks([])
     ax.set_yticks([])
 
@@ -98,9 +105,9 @@ def create_data_modalities_figure():
         y += ph * np.exp(-(x - px)**2 / (2 * pw**2))
         
     ax.plot(x, y, color='#4C72B0', linewidth=1.5)
-    ax.set_title('(d) Mass Spectrometry Data (Spectrum)', fontsize=12, fontweight='bold')
-    ax.set_xlabel('Mass/Charge (m/z)', fontsize=10)
-    ax.set_ylabel('Relative Intensity', fontsize=10)
+    ax.set_title('(d) Mass Spectrometry Data (Spectrum)', fontweight='bold')
+    ax.set_xlabel('Mass/Charge (m/z)')
+    ax.set_ylabel('Relative Intensity')
     ax.set_ylim(0, 1.2)
     ax.set_yticks([0, 0.5, 1.0])
     ax.grid(True, linestyle='--', alpha=0.4)

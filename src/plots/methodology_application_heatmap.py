@@ -48,7 +48,13 @@ cross_tab = cross_tab.reindex(index=app_order, columns=method_order, fill_value=
 # --- Create Heatmap ---
 plt.style.use('seaborn-v0_8-white')
 plt.rcParams['font.family'] = 'serif'
+plt.rcParams['font.size'] = 10
 plt.rcParams['axes.labelweight'] = 'bold'
+plt.rcParams['axes.titlesize'] = 12
+plt.rcParams['axes.labelsize'] = 10
+plt.rcParams['xtick.labelsize'] = 10
+plt.rcParams['ytick.labelsize'] = 10
+
 fig, ax = plt.subplots(figsize=(12, 9))
 
 # Use a professional colormap
@@ -60,11 +66,11 @@ sns.heatmap(cross_tab,
             cbar_kws={'label': 'Number of Papers'},
             ax=ax)
 
-ax.set_title('Frequency of ML Methodologies Across Application Areas', pad=25, fontsize=14, fontweight='bold')
-ax.set_xlabel('Machine Learning Methodology', fontsize=12, labelpad=10)
-ax.set_ylabel('Application Area', fontsize=12, labelpad=10)
-plt.xticks(rotation=35, ha='right', fontsize=10)
-plt.yticks(rotation=0, fontsize=10)
+ax.set_title('Frequency of ML Methodologies Across Application Areas', pad=25, fontweight='bold')
+ax.set_xlabel('Machine Learning Methodology', labelpad=10)
+ax.set_ylabel('Application Area', labelpad=10)
+plt.xticks(rotation=35, ha='right')
+plt.yticks(rotation=0)
 
 # --- Save Figure ---
 output_dir = 'figures'

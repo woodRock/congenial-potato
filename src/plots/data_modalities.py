@@ -7,9 +7,11 @@ def create_data_modalities_figure():
     Generates a 2x2 figure showing four simulated data modalities
     for marine biomass analysis.
     """
-    fig, axes = plt.subplots(2, 2, figsize=(10, 8))
+    plt.rcParams['font.family'] = 'serif'
+    plt.rcParams['axes.labelweight'] = 'bold'
+    fig, axes = plt.subplots(2, 2, figsize=(12, 10))
     fig.suptitle('Fig. 2. Examples of data modalities used in ML-based biomass analysis.', 
-                 fontsize=16, y=0.98)
+                 fontsize=16, y=0.98, fontweight='bold')
 
     # --- (a) Acoustic Echogram ---
     ax = axes[0, 0]
@@ -24,12 +26,12 @@ def create_data_modalities_figure():
     school = 0.7 * np.exp(-(x * x + y * y) / (2 * 8**2))
     echogram_data += school
     
-    im = ax.imshow(echogram_data, aspect='auto', cmap='jet', vmin=0, vmax=1)
-    ax.set_title('(a) Acoustic Data (Echogram)')
-    ax.set_xlabel('Ping Number (Time)')
-    ax.set_ylabel('Depth (m)')
+    im = ax.imshow(echogram_data, aspect='auto', cmap='viridis', vmin=0, vmax=1)
+    ax.set_title('(a) Acoustic Data (Echogram)', fontsize=12, fontweight='bold')
+    ax.set_xlabel('Ping Number (Time)', fontsize=10)
+    ax.set_ylabel('Depth (m)', fontsize=10)
     cbar = fig.colorbar(im, ax=ax, orientation='vertical', fraction=0.046, pad=0.04)
-    cbar.set_label('Signal Strength (dB)')
+    cbar.set_label('Signal Strength (dB)', fontsize=10, fontweight='bold')
     ax.set_xticks([])
     ax.set_yticks([])
 
@@ -45,39 +47,39 @@ def create_data_modalities_figure():
     # Add a "coastline"
     bloom_data[:80, :60] = -0.5  # Land
     
-    im = ax.imshow(bloom_data, cmap='viridis', origin='lower')
-    ax.set_title('(b) Remote Sensing Data (Chlorophyll-a)')
-    ax.set_xlabel('Longitude')
-    ax.set_ylabel('Latitude')
+    im = ax.imshow(bloom_data, cmap='GnBu_r', origin='lower')
+    ax.set_title('(b) Remote Sensing Data (Chlorophyll-a)', fontsize=12, fontweight='bold')
+    ax.set_xlabel('Longitude', fontsize=10)
+    ax.set_ylabel('Latitude', fontsize=10)
     cbar = fig.colorbar(im, ax=ax, orientation='vertical', fraction=0.046, pad=0.04)
-    cbar.set_label('Chlorophyll-a (mg/m³)')
+    cbar.set_label('Chlorophyll-a (mg/m³)', fontsize=10, fontweight='bold')
     ax.set_xticks([])
     ax.set_yticks([])
 
 
     # --- (c) In-situ Optical Data (with ML Detection) ---
     ax = axes[1, 0]
-    ax.set_facecolor('darkcyan') # Blue-green water
+    ax.set_facecolor('#E6F3F7') # Light blue-green water
     
     # Simulate fish (ellipses)
-    fish1 = patches.Ellipse((0.3, 0.6), 0.25, 0.1, angle=20, color='silver')
-    fish2 = patches.Ellipse((0.7, 0.3), 0.3, 0.12, angle=-30, color='gray')
+    fish1 = patches.Ellipse((0.3, 0.6), 0.25, 0.1, angle=20, color='#708090', alpha=0.8) # SlateGray
+    fish2 = patches.Ellipse((0.7, 0.3), 0.3, 0.12, angle=-30, color='#2F4F4F', alpha=0.8) # DarkSlateGray
     ax.add_patch(fish1)
     ax.add_patch(fish2)
     
     # Simulate ML bounding boxes
     bbox1 = patches.Rectangle((0.15, 0.5), 0.3, 0.2, linewidth=2, 
-                              edgecolor='red', facecolor='none', linestyle='--')
+                              edgecolor='#C44E52', facecolor='none', linestyle='-')
     bbox2 = patches.Rectangle((0.5, 0.18), 0.4, 0.25, linewidth=2, 
-                              edgecolor='red', facecolor='none', linestyle='--')
+                              edgecolor='#C44E52', facecolor='none', linestyle='-')
     ax.add_patch(bbox1)
     ax.add_patch(bbox2)
-    ax.text(0.15, 0.72, 'fish', color='red', fontsize=10)
-    ax.text(0.5, 0.45, 'fish', color='red', fontsize=10)
+    ax.text(0.15, 0.72, 'fish (98%)', color='#C44E52', fontsize=10, fontweight='bold')
+    ax.text(0.5, 0.45, 'fish (95%)', color='#C44E52', fontsize=10, fontweight='bold')
     
-    ax.set_title('(c) In-situ Optical Data (with ML Detections)')
-    ax.set_xlabel('x-pixel')
-    ax.set_ylabel('y-pixel')
+    ax.set_title('(c) In-situ Optical Data (ML Detection)', fontsize=12, fontweight='bold')
+    ax.set_xlabel('x-pixel', fontsize=10)
+    ax.set_ylabel('y-pixel', fontsize=10)
     ax.set_xticks([])
     ax.set_yticks([])
 
@@ -95,18 +97,18 @@ def create_data_modalities_figure():
     for (px, ph, pw) in zip(peaks_x, peaks_h, peaks_w):
         y += ph * np.exp(-(x - px)**2 / (2 * pw**2))
         
-    ax.plot(x, y, color='black', linewidth=1)
-    ax.set_title('(d) Mass Spectrometry Data (Spectrum)')
-    ax.set_xlabel('Mass/Charge (m/z)')
-    ax.set_ylabel('Relative Intensity')
+    ax.plot(x, y, color='#4C72B0', linewidth=1.5)
+    ax.set_title('(d) Mass Spectrometry Data (Spectrum)', fontsize=12, fontweight='bold')
+    ax.set_xlabel('Mass/Charge (m/z)', fontsize=10)
+    ax.set_ylabel('Relative Intensity', fontsize=10)
     ax.set_ylim(0, 1.2)
     ax.set_yticks([0, 0.5, 1.0])
-    ax.grid(True, linestyle='--', alpha=0.6)
+    ax.grid(True, linestyle='--', alpha=0.4)
 
     # --- Final Touches ---
     plt.tight_layout(rect=[0, 0.03, 1, 0.95]) # Adjust layout for suptitle
-    plt.savefig("figures/data_modalities_figure.png", dpi=300)
-    plt.show()
+    plt.savefig("figures/data_modalities_figure.pdf", dpi=300, bbox_inches='tight')
+    # plt.show()
 
 # Run the function to generate the plot
 create_data_modalities_figure()

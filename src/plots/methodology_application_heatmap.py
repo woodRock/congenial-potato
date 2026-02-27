@@ -46,22 +46,25 @@ app_order = [
 cross_tab = cross_tab.reindex(index=app_order, columns=method_order, fill_value=0)
 
 # --- Create Heatmap ---
-plt.style.use('seaborn-v0_8-talk')
+plt.style.use('seaborn-v0_8-white')
+plt.rcParams['font.family'] = 'serif'
+plt.rcParams['axes.labelweight'] = 'bold'
 fig, ax = plt.subplots(figsize=(12, 9))
 
+# Use a professional colormap
 sns.heatmap(cross_tab,
             annot=True,
             fmt="d",
-            cmap="Blues",
-            linewidths=.5,
-            cbar=True,
+            cmap="YlGnBu",
+            linewidths=.8,
+            cbar_kws={'label': 'Number of Papers'},
             ax=ax)
 
-ax.set_title('Frequency of ML Methodologies Applied Across Application Areas', pad=20)
-ax.set_xlabel('Machine Learning Methodology')
-ax.set_ylabel('Application Area')
-plt.xticks(rotation=45, ha='right')
-plt.yticks(rotation=0)
+ax.set_title('Frequency of ML Methodologies Across Application Areas', pad=25, fontsize=14, fontweight='bold')
+ax.set_xlabel('Machine Learning Methodology', fontsize=12, labelpad=10)
+ax.set_ylabel('Application Area', fontsize=12, labelpad=10)
+plt.xticks(rotation=35, ha='right', fontsize=10)
+plt.yticks(rotation=0, fontsize=10)
 
 # --- Save Figure ---
 output_dir = 'figures'
@@ -70,7 +73,7 @@ if not os.path.exists(output_dir):
     print(f"Created directory: {output_dir}")
 
 plt.tight_layout()
-plt.savefig(os.path.join(output_dir, 'methodology_vs_application_heatmap.png'), bbox_inches='tight')
-print(f"Saved {os.path.join(output_dir, 'methodology_vs_application_heatmap.png')}")
+plt.savefig(os.path.join(output_dir, 'methodology_vs_application_heatmap.pdf'), dpi=300, bbox_inches='tight')
+print(f"Saved {os.path.join(output_dir, 'methodology_vs_application_heatmap.pdf')}")
 
 plt.close(fig)

@@ -54,76 +54,78 @@ if not os.path.exists(output_dir):
     os.makedirs(output_dir)
     print(f"Created directory: {output_dir}")
 
-plt.style.use('seaborn-v0_8-talk') # Using a slightly more modern style
+plt.style.use('seaborn-v0_8-white')
+plt.rcParams['font.family'] = 'serif'
+plt.rcParams['axes.labelweight'] = 'bold'
 
 # 1. Bar Chart: Papers per Year
 fig1, ax1 = plt.subplots(figsize=(10, 6))
-ax1.bar(years, counts_years, color='skyblue')
-ax1.set_xlabel('Publication Year')
-ax1.set_ylabel('Number of Papers')
-ax1.set_title('Distribution of Included Papers by Year')
-ax1.set_xticks(years) # Ensure all years are labeled
+ax1.bar(years, counts_years, color='#4C72B0', edgecolor='black', width=0.4, linewidth=0.8)
+ax1.set_xlabel('Publication Year', fontsize=12)
+ax1.set_ylabel('Number of Papers', fontsize=12)
+ax1.set_title('Distribution of Included Papers by Year', pad=20, fontsize=14, fontweight='bold')
+ax1.set_xticks(years) 
 ax1.spines['top'].set_visible(False)
 ax1.spines['right'].set_visible(False)
+ax1.yaxis.grid(True, linestyle='--', alpha=0.6, zorder=0)
+ax1.set_axisbelow(True) # Ensure grid is behind bars
 plt.tight_layout()
-plt.savefig(os.path.join(output_dir, 'papers_per_year.png'))
-print(f"Saved {os.path.join(output_dir, 'papers_per_year.png')}")
+plt.savefig(os.path.join(output_dir, 'papers_per_year.pdf'), dpi=300, bbox_inches='tight')
+print(f"Saved {os.path.join(output_dir, 'papers_per_year.pdf')}")
 
-# 2. Pie Chart: ML Method Distribution - ADJUSTED FOR CENTERING
-# Use a more square figure size for pie charts
-fig2, ax2 = plt.subplots(figsize=(8, 8)) # Changed figsize to be square
-# Use autopct to show percentages, display label if percentage > 3%
+# 2. Pie Chart: ML Method Distribution
+fig2, ax2 = plt.subplots(figsize=(8, 8))
 def func(pct, allvals):
-    absolute = int(np.round(pct/100.*np.sum(allvals)))
-    # Display count inside slice if desired: return f"{pct:.1f}%\n({absolute:d})"
     return "{:.1f}%".format(pct) if pct > 3 else ''
+
+# Use a professional color palette
+colors = ['#4C72B0', '#55A868', '#C44E52', '#8172B3', '#CCB974', '#64B5CD']
 
 wedges, texts, autotexts = ax2.pie(counts_methods,
                                    autopct=lambda pct: func(pct, counts_methods),
                                    startangle=90,
-                                   pctdistance=0.85, # Position of percentage labels inside wedges
-                                   colors=plt.cm.Paired(np.linspace(0, 1, len(labels_methods))),
-                                   # Removed radius=1.0 - let matplotlib handle sizing initially
+                                   pctdistance=0.80,
+                                   colors=colors[:len(labels_methods)],
+                                   wedgeprops={'edgecolor': 'white', 'linewidth': 1.5}
                                    )
 
-ax2.set_title('Distribution of Primary ML Methodologies Used', pad=20)
+ax2.set_title('Distribution of Primary ML Methodologies', pad=20, fontsize=14, fontweight='bold')
 
-# Create legend outside the pie chart - adjusted bbox_to_anchor
-# (x, y, width, height) - Place legend to the right, centered vertically
 legend = ax2.legend(wedges, labels_methods,
                     title="ML Methods",
-                    loc="center left", # Anchor point on the legend box
-                    bbox_to_anchor=(1.05, 0.5), # Position relative to axes (x=1.05 means just outside right edge)
-                    fontsize='medium') # Adjust fontsize if needed
+                    loc="center left",
+                    bbox_to_anchor=(1, 0.5),
+                    fontsize=10,
+                    frameon=True)
 
 plt.setp(autotexts, size=10, weight="bold", color="white")
-
-# Use subplots_adjust OR tight_layout without rect, and save with bbox_inches='tight'
-# Option 1: subplots_adjust (more manual control)
-# plt.subplots_adjust(left=0.1, right=0.75, top=0.9, bottom=0.1) # Adjust right value to fit legend
-
-# Option 2: tight_layout() + savefig adjustment (often simpler)
-plt.tight_layout() # Let tight_layout do initial adjustment
-plt.savefig(os.path.join(output_dir, 'ml_method_distribution.png'),
-            bbox_inches='tight', # Crucial for removing whitespace around the figure
-            pad_inches=0.1) # Optional small padding
-print(f"Saved {os.path.join(output_dir, 'ml_method_distribution.png')}")
+plt.tight_layout()
+plt.savefig(os.path.join(output_dir, 'ml_method_distribution.pdf'),
+            dpi=300,
+            bbox_inches='tight',
+            pad_inches=0.1)
+print(f"Saved {os.path.join(output_dir, 'ml_method_distribution.pdf')}")
 
 
-# 3. Bar Chart: Application Focus Distribution (Sorted)
+# 3. Bar Chart: Application Focus Distribution
 fig3, ax3 = plt.subplots(figsize=(12, 7))
-bars = ax3.bar(labels_apps, counts_apps, color='lightcoral')
-ax3.set_xlabel('Application Area')
-ax3.set_ylabel('Number of Papers')
-ax3.set_title('Distribution of Papers by Primary Application Focus')
+bars = ax3.bar(labels_apps, counts_apps, color='#C44E52', edgecolor='black', width=0.4, linewidth=0.8)
+ax3.set_xlabel('Application Area', fontsize=12)
+ax3.set_ylabel('Number of Papers', fontsize=12)
+ax3.set_title('Distribution of Papers by Primary Application Focus', pad=20, fontsize=14, fontweight='bold')
 ax3.spines['top'].set_visible(False)
 ax3.spines['right'].set_visible(False)
-plt.xticks(rotation=45, ha='right') # Rotate labels for better readability
-# Add counts on top of bars
-ax3.bar_label(bars, padding=3)
+ax3.yaxis.grid(True, linestyle='--', alpha=0.6, zorder=0)
+ax3.set_axisbelow(True)
+plt.xticks(rotation=30, ha='right', fontsize=10)
+ax3.bar_label(bars, padding=3, fontsize=10, fontweight='bold')
 plt.tight_layout()
-plt.savefig(os.path.join(output_dir, 'application_focus_distribution.png'))
-print(f"Saved {os.path.join(output_dir, 'application_focus_distribution.png')}")
+plt.savefig(os.path.join(output_dir, 'application_focus_distribution.pdf'), dpi=300, bbox_inches='tight')
+print(f"Saved {os.path.join(output_dir, 'application_focus_distribution.pdf')}")
+
+plt.close(fig1)
+plt.close(fig2)
+plt.close(fig3)
 
 plt.close(fig1)
 plt.close(fig2)

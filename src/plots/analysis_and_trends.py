@@ -56,20 +56,20 @@ if not os.path.exists(output_dir):
 
 plt.style.use('seaborn-v0_8-white')
 plt.rcParams['font.family'] = 'serif'
-plt.rcParams['font.size'] = 10
+plt.rcParams['font.size'] = 14
 plt.rcParams['axes.labelweight'] = 'bold'
-plt.rcParams['axes.titlesize'] = 12
-plt.rcParams['axes.labelsize'] = 10
-plt.rcParams['xtick.labelsize'] = 10
-plt.rcParams['ytick.labelsize'] = 10
-plt.rcParams['legend.fontsize'] = 10
+plt.rcParams['axes.titlesize'] = 16
+plt.rcParams['axes.labelsize'] = 14
+plt.rcParams['xtick.labelsize'] = 12
+plt.rcParams['ytick.labelsize'] = 12
+plt.rcParams['legend.fontsize'] = 12
 
 # 1. Bar Chart: Papers per Year
-fig1, ax1 = plt.subplots(figsize=(10, 6))
-ax1.bar(years, counts_years, color='#4C72B0', edgecolor='black', width=0.4, linewidth=0.8)
-ax1.set_xlabel('Publication Year')
-ax1.set_ylabel('Number of Papers')
-ax1.set_title('Distribution of Included Papers by Year', pad=20, fontweight='bold')
+fig1, ax1 = plt.subplots(figsize=(8, 6))
+ax1.bar(years, counts_years, color='#4C72B0', edgecolor='black', width=0.6, linewidth=0.8)
+ax1.set_xlabel('Publication Year', fontsize=14, fontweight='bold')
+ax1.set_ylabel('Number of Papers', fontsize=14, fontweight='bold')
+ax1.set_title('Distribution of Included Papers by Year', pad=20, fontweight='bold', fontsize=16)
 ax1.set_xticks(years) 
 ax1.spines['top'].set_visible(False)
 ax1.spines['right'].set_visible(False)
@@ -90,20 +90,22 @@ colors = ['#4C72B0', '#55A868', '#C44E52', '#8172B3', '#CCB974', '#64B5CD']
 wedges, texts, autotexts = ax2.pie(counts_methods,
                                    autopct=lambda pct: func(pct, counts_methods),
                                    startangle=90,
-                                   pctdistance=0.80,
+                                   pctdistance=0.75,
                                    colors=colors[:len(labels_methods)],
                                    wedgeprops={'edgecolor': 'white', 'linewidth': 1.5}
                                    )
 
-ax2.set_title('Distribution of Primary ML Methodologies', pad=20, fontweight='bold')
+ax2.set_title('Distribution of Primary ML Methodologies', pad=20, fontweight='bold', fontsize=16)
 
 legend = ax2.legend(wedges, labels_methods,
                     title="ML Methods",
-                    loc="center left",
-                    bbox_to_anchor=(1, 0.5),
-                    frameon=True)
+                    loc="lower center",
+                    bbox_to_anchor=(0.5, -0.15),
+                    ncol=2,
+                    frameon=True,
+                    fontsize=12)
 
-plt.setp(autotexts, size=10, weight="bold", color="white")
+plt.setp(autotexts, size=12, weight="bold", color="white")
 plt.tight_layout()
 plt.savefig(os.path.join(output_dir, 'ml_method_distribution.pdf'),
             dpi=300,
@@ -113,17 +115,17 @@ print(f"Saved {os.path.join(output_dir, 'ml_method_distribution.pdf')}")
 
 
 # 3. Bar Chart: Application Focus Distribution
-fig3, ax3 = plt.subplots(figsize=(12, 7))
-bars = ax3.bar(labels_apps, counts_apps, color='#C44E52', edgecolor='black', width=0.4, linewidth=0.8)
-ax3.set_xlabel('Application Area')
-ax3.set_ylabel('Number of Papers')
-ax3.set_title('Distribution of Papers by Primary Application Focus', pad=20, fontweight='bold')
+fig3, ax3 = plt.subplots(figsize=(8, 7))
+bars = ax3.bar(labels_apps, counts_apps, color='#C44E52', edgecolor='black', width=0.6, linewidth=0.8)
+ax3.set_xlabel('Application Area', fontsize=14, fontweight='bold')
+ax3.set_ylabel('Number of Papers', fontsize=14, fontweight='bold')
+ax3.set_title('Distribution of Papers by Primary Application Focus', pad=20, fontweight='bold', fontsize=16)
 ax3.spines['top'].set_visible(False)
 ax3.spines['right'].set_visible(False)
 ax3.yaxis.grid(True, linestyle='--', alpha=0.6, zorder=0)
 ax3.set_axisbelow(True)
-plt.xticks(rotation=30, ha='right')
-ax3.bar_label(bars, padding=3, fontweight='bold')
+plt.xticks(rotation=45, ha='right', fontsize=12)
+ax3.bar_label(bars, padding=3, fontweight='bold', fontsize=12)
 plt.tight_layout()
 plt.savefig(os.path.join(output_dir, 'application_focus_distribution.pdf'), dpi=300, bbox_inches='tight')
 print(f"Saved {os.path.join(output_dir, 'application_focus_distribution.pdf')}")

@@ -23,7 +23,7 @@ years_data = []
 for entry in entries:
     if not entry.strip():
         continue
-    year_match = re.search(r'year\s*=\s*{(\d{4})}', entry, re.IGNORECASE)
+    year_match = re.search(r'year\s*=\s*[{"](\d{4})["}]', entry, re.IGNORECASE)
     if year_match:
         years_data.append(int(year_match.group(1)))
 
@@ -70,14 +70,16 @@ ax1.bar(years, counts_years, color='#4C72B0', edgecolor='black', width=0.6, line
 ax1.set_xlabel('Publication Year', fontsize=14, fontweight='bold')
 ax1.set_ylabel('Number of Papers', fontsize=14, fontweight='bold')
 ax1.set_title('Distribution of Included Papers by Year', pad=20, fontweight='bold', fontsize=16)
-ax1.set_xticks(years) 
+ax1.set_xticks(years)
+ax1.tick_params(axis='both', labelsize=14)
 ax1.spines['top'].set_visible(False)
 ax1.spines['right'].set_visible(False)
 ax1.yaxis.grid(True, linestyle='--', alpha=0.6, zorder=0)
 ax1.set_axisbelow(True) # Ensure grid is behind bars
 plt.tight_layout()
 plt.savefig(os.path.join(output_dir, 'papers_per_year.pdf'), dpi=300, bbox_inches='tight')
-print(f"Saved {os.path.join(output_dir, 'papers_per_year.pdf')}")
+plt.savefig(os.path.join(output_dir, 'papers_per_year.png'), dpi=300, bbox_inches='tight')
+print(f"Saved {os.path.join(output_dir, 'papers_per_year.pdf/.png')}")
 
 # 2. Pie Chart: ML Method Distribution
 fig2, ax2 = plt.subplots(figsize=(8, 8))
@@ -124,11 +126,13 @@ ax3.spines['top'].set_visible(False)
 ax3.spines['right'].set_visible(False)
 ax3.yaxis.grid(True, linestyle='--', alpha=0.6, zorder=0)
 ax3.set_axisbelow(True)
-plt.xticks(rotation=45, ha='right', fontsize=12)
-ax3.bar_label(bars, padding=3, fontweight='bold', fontsize=12)
+plt.xticks(rotation=45, ha='right', fontsize=13)
+ax3.tick_params(axis='y', labelsize=13)
+ax3.bar_label(bars, padding=3, fontweight='bold', fontsize=13)
 plt.tight_layout()
 plt.savefig(os.path.join(output_dir, 'application_focus_distribution.pdf'), dpi=300, bbox_inches='tight')
-print(f"Saved {os.path.join(output_dir, 'application_focus_distribution.pdf')}")
+plt.savefig(os.path.join(output_dir, 'application_focus_distribution.png'), dpi=300, bbox_inches='tight')
+print(f"Saved {os.path.join(output_dir, 'application_focus_distribution.pdf/.png')}")
 
 plt.close(fig1)
 plt.close(fig2)

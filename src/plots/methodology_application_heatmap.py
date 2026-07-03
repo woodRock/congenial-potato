@@ -32,14 +32,12 @@ method_order = [
     'Deep learning - transformers',
     'Unsupervised and self-supervised',
     'Evolutionary computation',
-    'Other'
 ]
 app_order = [
     'Fisheries management & stock assessment',
     'Aquaculture & automated monitoring',
     'Plankton & phytoplankton analysis',
     'Molecular level analysis & food science',
-    'Other'
 ]
 
 # Ensure all categories are present and reindex
